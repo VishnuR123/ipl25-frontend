@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./PlayerPage.css";
+import Overseas from "../../assets/plane.png";
 const PlayerPage = ({ players }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [groupByRole, setGroupByRole] = useState(false);
@@ -39,7 +40,7 @@ const PlayerPage = ({ players }) => {
               {player.name}
               {player.nationality === ("Overseas " || "Overseas") && (
               <img
-                src="src/assets/plane.png" 
+                src={ Overseas}
                 alt="Overseas Player"
                 className="overseas-icon"
               />
