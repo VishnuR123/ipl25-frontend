@@ -12,8 +12,8 @@ import CVCPage from "./components/CVCPage/CVCPage";
 import PastResults from "./components/PastResults/PastResults";
 import Predictions from "./components/PredictionPage/Predictions";
 
-// export const URL = import.meta.env.VITE_APP_SERVER_URL;
-export const URL = "http://localhost:5000";
+export const URL = import.meta.env.VITE_APP_SERVER_URL;
+// export const URL = "http://localhost:5000";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
