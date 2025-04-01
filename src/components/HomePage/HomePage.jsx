@@ -94,7 +94,8 @@ function HomePage({ players, ownerPoints }) {
       const documentsNotToday = ownerPoints.filter((doc) => {
         const docDate = new Date(doc.date);
         const mostRecentDate = new Date(mostRecent.date);
-        return docDate.getDate() < mostRecentDate.getDate();
+        // return docDate.getDate() < mostRecentDate.getDate();
+        return docDate < mostRecentDate;
         // return (
         //   docDate.getFullYear() === mostRecentDate.getFullYear() &&
         //   docDate.getMonth() === mostRecentDate.getMonth() &&

@@ -108,11 +108,12 @@ const HighestContributor = ({ owner, ownerPoints, players }) => {
     const previousDayMostRecent = ownerPoints.find((doc) => {
       const docDate = new Date(doc.date);
       const mostRecentDate = new Date(mostRecent.date);
-      return (
-        docDate.getFullYear() === mostRecentDate.getFullYear() &&
-        docDate.getMonth() === mostRecentDate.getMonth() &&
-        docDate.getDate() < mostRecentDate.getDate()
-      );
+      // return (
+      //   docDate.getFullYear() === mostRecentDate.getFullYear() &&
+      //   docDate.getMonth() === mostRecentDate.getMonth() &&
+      //   docDate.getDate() < mostRecentDate.getDate()
+      // );
+      return docDate < mostRecentDate; // Compare full dates
     });
 
     if (previousDayMostRecent) {

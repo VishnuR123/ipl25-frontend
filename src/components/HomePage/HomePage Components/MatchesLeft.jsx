@@ -35,8 +35,7 @@ function MatchesLeft({ matchesLeft }) {
     <>
 
 
-      <ResponsiveContainer width="100%"  height="80%"
-      >
+      <ResponsiveContainer width="100%"  height="80%">
         <PieChart>
           <Pie
             cx="50%"
