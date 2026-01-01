@@ -17,6 +17,18 @@ const PlayerPage = ({ players }) => {
     setGroupByRole(event.target.checked);
   };
   
+  const getEffectivePoints = (player) => {
+    if (!applyBoost) return player.totalPoints;
+
+    if (player.captainStatus === "captain")
+      return Math.round(player.totalPoints / 1.5);
+
+    if (player.captainStatus === "vice-captain")
+      return Math.round(player.totalPoints / 1.25);
+
+    return player.totalPoints;
+  };
+  
   // 1. Team filter
   const teamFilteredPlayers = selectedCountry
   ? players.filter((player) => player.team === selectedCountry)
@@ -36,19 +48,6 @@ const PlayerPage = ({ players }) => {
   );
 
   const roles = ["Batter", "Bowler", "Allrounder", "Wicketkeeper"];
-
-  const getEffectivePoints = (player) => {
-    if (!applyBoost) return player.totalPoints;
-
-    if (player.captainStatus === "captain")
-      return Math.round(player.totalPoints / 1.5);
-
-    if (player.captainStatus === "vice-captain")
-      return Math.round(player.totalPoints / 1.25);
-
-    return player.totalPoints;
-  };
-
 
   const renderTable = (players) => (
     <table className="container">
