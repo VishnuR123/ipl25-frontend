@@ -18,7 +18,7 @@ const PlayerPage = ({ players }) => {
   };
   
   const getEffectivePoints = (player) => {
-    if (!applyBoost) return player.totalPoints;
+    if (applyBoost) return player.totalPoints;
 
     if (player.captainStatus === "captain")
       return Math.round(player.totalPoints / 1.5);
