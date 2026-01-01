@@ -5,7 +5,7 @@ import Overseas from "../../assets/plane.png";
 const PlayerPage = ({ players }) => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [groupByRole, setGroupByRole] = useState(false);
-  const [showBoost, setShowBoost] = useState(true);
+  const [applyBoost, setApplyBoost] = useState(true);
   const [playerType, setPlayerType] = useState("ALL");
 
   
@@ -26,24 +26,28 @@ const PlayerPage = ({ players }) => {
   );
   const nationalityFilteredPlayers = filteredPlayers.filter((player) => {
     if (playerType === "ALL") return true;
-    if (playerType === "INDIAN") return player.nationality === "Indian";
-    if (playerType === "OVERSEAS") return player.nationality === "Overseas";
+    if (playerType === "INDIAN") return player.nationality === "Indian ";
+    if (playerType === "OVERSEAS") return player.nationality === "Overseas ";
     return true;
   });
 
   const roles = ["Batter", "Bowler", "Allrounder", "Wicketkeeper"];
 
-  const getDisplayedPoints = (player) => {
-    if (showBoost) return player.totalPoints;
+  const getEffectivePoints = (player) => {
+    if (!applyBoost) return player.totalPoints;
 
     if (player.captainStatus === "captain")
       return Math.round(player.totalPoints / 1.5);
 
-    if (player.captainStatus === "vcaptain")
+    if (player.captainStatus === "vice-captain")
       return Math.round(player.totalPoints / 1.25);
 
     return player.totalPoints;
   };
+  const sortedPlayers = [...filteredPlayersS].sort(
+  (a, b) => getEffectivePoints(b) - getEffectivePoints(a)
+  );
+
 
   const renderTable = (players) => (
     <table className="container">
@@ -60,7 +64,7 @@ const PlayerPage = ({ players }) => {
           <tr key={player.name} className={player.captainStatus}>
             <td>
               {player.name}
-              {player.nationality === "Overseas" && (
+              {player.nationality === "Overseas " && (
                 <img
                   src={Overseas}
                   alt="Overseas Player"
@@ -70,7 +74,7 @@ const PlayerPage = ({ players }) => {
             </td>
             <td>{player.owner}</td>
             <td>{player.team}</td>
-            <td>{getDisplayedPoints(player)}</td>
+            <td>{getEffectivePoints(player)}</td>
           </tr>
         ))}
       </tbody>
@@ -113,9 +117,9 @@ const PlayerPage = ({ players }) => {
 
         <button
           className="boost-toggle-btn"
-          onClick={() => setShowBoost((prev) => !prev)}
+          onClick={() => setApplyBoost((prev) => !prev)}
         >
-          {showBoost ? "Remove C/VC Boost" : "Show C/VC Boost"}
+          {applyBoost ? "Remove C/VC Boost" : "Show C/VC Boost"}
         </button>
         
         <div className="nationality-toggle">
