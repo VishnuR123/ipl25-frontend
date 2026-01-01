@@ -17,19 +17,23 @@ const PlayerPage = ({ players }) => {
     setGroupByRole(event.target.checked);
   };
   
-  const filteredPlayersS = selectedCountry
+  // 1. Team filter
+  const teamFilteredPlayers = selectedCountry
   ? players.filter((player) => player.team === selectedCountry)
   : players;
   
-  const filteredPlayers = filteredPlayersS.sort(
-    (a, b) => b.totalPoints - a.totalPoints
-  );
-  const nationalityFilteredPlayers = filteredPlayers.filter((player) => {
+  // 2. Nationality filter
+  const nationalityFilteredPlayers = teamFilteredPlayers.filter((player) => {
     if (playerType === "ALL") return true;
     if (playerType === "INDIAN") return player.nationality === "Indian ";
     if (playerType === "OVERSEAS") return player.nationality === "Overseas ";
     return true;
   });
+  
+  // 3. Sort AFTER boost logic
+  const finalSortedPlayers = [...nationalityFilteredPlayers].sort(
+    (a, b) => getEffectivePoints(b) - getEffectivePoints(a)
+  );
 
   const roles = ["Batter", "Bowler", "Allrounder", "Wicketkeeper"];
 
@@ -44,9 +48,6 @@ const PlayerPage = ({ players }) => {
 
     return player.totalPoints;
   };
-  const sortedPlayers = [...filteredPlayersS].sort(
-  (a, b) => getEffectivePoints(b) - getEffectivePoints(a)
-  );
 
 
   const renderTable = (players) => (
@@ -165,11 +166,11 @@ const PlayerPage = ({ players }) => {
                     : "Wicket-keepers"}
                 </h2>
                 {renderTable(
-                  nationalityFilteredPlayers.filter((player) => player.role === role)
+                  finalSortedPlayers.filter((player) => player.role === role)
                 )}
               </div>
             ))
-          : renderTable(nationalityFilteredPlayers)}
+          : renderTable(finalSortedPlayers)}
       </div>
     </div>
   );
